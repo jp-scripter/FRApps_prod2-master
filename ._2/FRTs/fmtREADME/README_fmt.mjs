@@ -30,7 +30,7 @@
   <style><!--
     details > ul > li            { margin-top:-10px !important; margin-bottom:20px !important; }
     details > ul > li > p        { color: #810d0d; padding-left: 20px; margin-top:-17px !important; text-indent: -20px; line-height: 22px !important; }
-    details > ul > li:last-child { display: none; }                    					            /* .(21218.02.1 RAM Don't display MT last child) */
+    details > ul > li:last-child { display: none; }                                                 /* .(21218.02.1 RAM Don't display MT last child) */
     code                         { color: black; font-size: 12px; margin: 0px 0px 0px 16px !important; padding-bottom: 0px; }   /* .(21218.02.3 RAM) */
   --></style>
 
@@ -79,9 +79,9 @@
  function  fmtApp( pApp ) {
 //         pApp.txt = pApp.txt.replace( /  - /g, "  &nbsp;&nbsp;&nbsp; &bull;&nbsp; " )
 //         pApp.txt = pApp.txt.replace( /\n +\n/g,  "\n                 <blankline>  \n"  )
-           pApp.txt = pApp.txt.replace( /  \$ (.+)\n/g,  " `$ $1 `  \n"       )     
+           pApp.txt = pApp.txt.replace( /  \$ (.+)\n/g,  " `$ $1 `  \n"       )
 
-   return  `- ### [${pApp.app}](${pApp.url})\n    `      
+   return  `- ### [${pApp.app}](${pApp.url})\n    `
         +  `${pApp.txt }\n`
             }
 //  -----   ------------------- =  ----------------------------------
@@ -258,16 +258,20 @@
 
  function   prtOut( aFile, aText, nPrt ) {
 
-        if (nPrt == 1 || nPrt == 3) {  // to stdout 
+        if (nPrt == 1 || nPrt == 3) {  // to stdout
             console.log( aText )
-            }  
+            }
 
         if (nPrt == 2 || nPrt == 3) {  // to file
-            aFile = aFile.match( /[\/]/ ) ? aFile : `${__dirname}/${aFile}` 
+            aFile = aFile.match( /[\/]/ ) ? aFile : `${__dirname}/${aFile}`
+            aFile = aFile.replace( /!/g, "\\!" )   // .(21226.05.1 RAM)
+//          aFile = aFile.replace( / /g, "\\ " )   // .(21226.05.2)
+//          aFile = aFile.replace( /%20/g, "\\ " ) // .(21226.05.3)
+
             writeFileSync( aFile, aText )
             console.log( `* Saved ${aFile}` )
             }
-        }   
+        }
 // ------  -------------------- =  --------------------------------------------
 
 
